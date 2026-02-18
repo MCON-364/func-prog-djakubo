@@ -105,7 +105,7 @@ public class FunctionalInterfaceExercises {
         Function<String, Integer> numberOfVowels = s -> {
             int totalVowels = 0;
             for (char letter : s.toCharArray()) {
-                if (vowels.contains(letter)) {
+                if (vowels.contains(Character.toLowerCase(letter))) {
                     totalVowels++;
                 }
             }
@@ -135,7 +135,7 @@ public class FunctionalInterfaceExercises {
      * of an integer.
      */
     public static Consumer<Integer> printSquare() {
-        Consumer<Integer> squareValue = x -> System.out.println(Math.pow(x, 2));
+        Consumer<Integer> squareValue = x -> System.out.println((int)Math.pow(x, 2));
         return squareValue;
     }
 
@@ -155,7 +155,15 @@ public class FunctionalInterfaceExercises {
      *  - Print them
      */
     public static void processStrings(List<String> values) {
-        // TODO
+
+        Predicate<String> isLongerThanThree = s -> s.length() > 3;
+        Function<String, String> convertToLowercase = s -> s.toLowerCase();
+        Consumer<String> printString = s -> System.out.println(s);
+        for(String value : values){
+            if(!isLongerThanThree.test(value)){continue;}
+            String result = convertToLowercase.apply(value);
+            printString.accept(result);
+        }
     }
 
     /**
@@ -168,6 +176,13 @@ public class FunctionalInterfaceExercises {
      * Print only those above 70.
      */
     public static void generateAndFilterScores() {
-        // TODO
+        Supplier<Integer> generateScore = () -> ThreadLocalRandom.current().nextInt(1, 101);
+        Predicate<Integer> isAbove70 = x -> x>70;
+        Consumer<Integer> printScore = x -> System.out.println(x);
+
+        for(int i = 0; i<5;i++){
+            int j = generateScore.get();
+            if(isAbove70.test(j)){printScore.accept(j);}
+        }
     }
 }
