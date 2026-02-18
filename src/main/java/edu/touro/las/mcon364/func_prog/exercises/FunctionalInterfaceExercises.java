@@ -2,6 +2,8 @@ package edu.touro.las.mcon364.func_prog.exercises;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -39,8 +41,8 @@ public class FunctionalInterfaceExercises {
      *
      */
     public static Supplier<Integer> currentYearSupplier() {
-      // TODO
-        return null;
+        Supplier<Integer> getCurrentYear = () -> LocalDate.now().getYear();
+        return getCurrentYear;
     }
 
     /**
@@ -48,8 +50,8 @@ public class FunctionalInterfaceExercises {
      * between 1 and 100.
      */
     public static Supplier<Integer> randomScoreSupplier() {
-        // TODO
-        return null;
+        Supplier<Integer> generateInt = () -> ThreadLocalRandom.current().nextInt(1, 101);
+        return generateInt;
     }
 
     // =========================================================
@@ -61,8 +63,8 @@ public class FunctionalInterfaceExercises {
      * a string is all uppercase.
      */
     public static Predicate<String> isAllUpperCase() {
-        // TODO
-        return null;
+        Predicate<String> isAllUpperCase = s -> s.toUpperCase().equals(s);
+        return isAllUpperCase;
     }
 
     /**
@@ -72,8 +74,8 @@ public class FunctionalInterfaceExercises {
      * Hint: consider chaining.
      */
     public static Predicate<Integer> positiveAndDivisibleByFive() {
-        // TODO
-        return null;
+        Predicate<Integer> isPosAndDivisibleByFive = x -> x>0 && x%5==0;
+        return isPosAndDivisibleByFive;
     }
 
     // =========================================================
@@ -87,8 +89,8 @@ public class FunctionalInterfaceExercises {
      * Formula: F = C * 9/5 + 32
      */
     public static Function<Double, Double> celsiusToFahrenheit() {
-        // TODO
-        return null;
+        Function<Double, Double> convertToFahrenheit = x -> x*1.8 +32;
+        return convertToFahrenheit;
     }
 
     /**
@@ -98,12 +100,22 @@ public class FunctionalInterfaceExercises {
      * Bonus: Make it case-insensitive.
      */
     public static Function<String, Integer> countVowels() {
-        // TODO
-        return null;
+        List<Character> vowels = List.of('a', 'e', 'i', 'o', 'u');
+
+        Function<String, Integer> numberOfVowels = s -> {
+            int totalVowels = 0;
+            for (char letter : s.toCharArray()) {
+                if (vowels.contains(letter)) {
+                    totalVowels++;
+                }
+            }
+            return totalVowels;
+        };
+            return numberOfVowels;
     }
 
     // =========================================================
-    // PART 4 — CONSUMERS
+    // PART 4 — CONSUMERS{
     // =========================================================
 
     /**
@@ -114,8 +126,8 @@ public class FunctionalInterfaceExercises {
      * *** Hello ***
      */
     public static Consumer<String> starPrinter() {
-        // TODO
-        return null;
+        Consumer<String> starsPrinter = s -> System.out.println("*** " + s + " ***");
+        return starsPrinter;
     }
 
     /**
@@ -123,8 +135,8 @@ public class FunctionalInterfaceExercises {
      * of an integer.
      */
     public static Consumer<Integer> printSquare() {
-        // TODO
-        return null;
+        Consumer<Integer> squareValue = x -> System.out.println(Math.pow(x, 2));
+        return squareValue;
     }
 
     // =========================================================
